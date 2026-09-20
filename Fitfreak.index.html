@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fit-fresk | Smart Nutrition Tracker</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #10b981;
+            --text-color: #f8fafc;
+            --subtext: #94a3b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        header h1 {
+            color: var(--accent-color);
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .dashboard {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .macro-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+
+        .macro-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .macro-card h4 {
+            margin: 0 0 5px 0;
+            color: var(--subtext);
+        }
+
+        .macro-card p {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .meal-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: var(--card-bg);
+            color: var(--subtext);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tab-btn.active {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .form-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--subtext);
+        }
+
+        input[type="text"], input[type="number"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #fff;
+            box-sizing: border-box;
+        }
+
+        button.submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            display: none;
+            margin-top: 10px;
+        }
+
+        .log-section {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .log-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #334155;
+            padding: 10px 0;
+        }
+
+        .log-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .log-info {
+            flex: 1;
+        }
+
+        .log-info h5 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .log-info p {
+            margin: 2px 0 0 0;
+            font-size: 0.85rem;
+            color: var(--subtext);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Fit-fresk</h1>
+        <p style="color: var(--subtext); margin-top: 4px;">Smart Food & Nutrition Tracker</p>
+    </header>
+
+    <!-- Daily Overview -->
+    <div class="dashboard">
+        <h3>Today's Totals</h3>
+        <div class="macro-summary">
+            <div class="macro-card">
+                <h4>Calories</h4>
+                <p id="total-calories">0 kcal</p>
+            </div>
+            <div class="macro-card">
+                <h4>Protein</h4>
+                <p id="total-protein">0 g</p>
+            </div>
+            <div class="macro-card">
+                <h4>Carbs</h4>
+                <p id="total-carbs">0 g</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meal Type Selection -->
+    <div class="meal-tabs">
+        <button class="tab-btn active" onclick="selectMeal('Breakfast', this)">Breakfast</button>
+        <button class="tab-btn" onclick="selectMeal('Lunch', this)">Lunch</button>
+        <button class="tab-btn" onclick="selectMeal('Snacks', this)">Snacks</button>
+        <button class="tab-btn" onclick="selectMeal('Dinner', this)">Dinner</button>
+    </div>
+
+    <!-- Log Meal Form -->
+    <div class="form-section">
+        <h3 id="current-meal-title">Log Breakfast</h3>
+        <form id="meal-form">
+            <div class="form-group">
+                <label>Food Item Name</label>
+                <input type="text" id="food-name" placeholder="e.g., Grilled Chicken Breast" required>
+            </div>
+            <div class="form-group">
+                <label>Food Image</label>
+                <input type="file" id="food-img-input" accept="image/*" onchange="previewFile()">
+                <img id="img-preview" class="preview-img" alt="Food Preview">
+            </div>
+            <div class="form-group">
+                <label>Weight (grams)</label>
+                <input type="number" id="food-weight" placeholder="e.g., 200" required>
+            </div>
+            <button type="submit" class="submit-btn">Analyze & Log Meal</button>
+        </form>
+    </div>
+
+    <!-- Daily Log Feed -->
+    <div class="log-section">
+        <h3>Logged Meals</h3>
+        <div id="logs-container">
+            <p style="color: var(--subtext); text-align: center;">No meals logged yet today.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let activeMeal = 'Breakfast';
+    const logs = [];
+
+    function selectMeal(meal, btn) {
+        activeMeal = meal;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('current-meal-title').innerText = `Log ${meal}`;
+    }
+
+    function previewFile() {
+        const preview = document.getElementById('img-preview');
+        const file = document.getElementById('food-img-input').files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+            preview.style.display = 'block';
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+            preview.style.display = 'none';
+        }
+    }
+
+    document.getElementById('meal-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('food-name').value;
+        const weight = parseFloat(document.getElementById('food-weight').value);
+        const imgInput = document.getElementById('food-img-input');
+        const imgSrc = imgInput.files[0] ? URL.createObjectURL(imgInput.files[0]) : 'https://via.placeholder.com/50';
+
+        // Simulated nutrition search scaling per gram
+        // Standard baseline estimates per 100g: ~1.5 kcal/g, 0.15g protein/g, 0.2g carbs/g
+        const calories = Math.round(weight * 1.6);
+        const protein = Math.round(weight * 0.18 * 10) / 10;
+        const carbs = Math.round(weight * 0.2 * 10) / 10;
+
+        const entry = {
+            id: Date.now(),
+            meal: activeMeal,
+            name: name,
+            weight: weight,
+            calories: calories,
+            protein: protein,
+            carbs: carbs,
+            imgSrc: imgSrc
+        };
+
+        logs.push(entry);
+        updateUI();
+        this.reset();
+        document.getElementById('img-preview').style.display = 'none';
+    });
+
+    function updateUI() {
+        const container = document.getElementById('logs-container');
+        
+        if (logs.length === 0) {
+            container.innerHTML = '<p style="color: var(--subtext); text-align: center;">No meals logged yet today.</p>';
+            return;
+        }
+
+        let totalCal = 0, totalProt = 0, totalCarb = 0;
+        container.innerHTML = '';
+
+        logs.forEach(item => {
+            totalCal += item.calories;
+            totalProt += item.protein;
+            totalCarb += item.carbs;
+
+            container.innerHTML += `
+                <div class="log-item">
+                    <img src="${item.imgSrc}" alt="${item.name}">
+                    <div class="log-info">
+                        <h5>${item.name} (${item.meal})</h5>
+                        <p>${item.weight}g • ${item.calories} kcal • P: ${item.protein}g • C: ${item.carbs}g</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('total-calories').innerText = `${totalCal} kcal`;
+        document.getElementById('total-protein').innerText = `${totalProt.toFixed(1)} g`;
+        document.getElementById('total-carbs').innerText = `${totalCarb.toFixed(1)} g`;
+    }
+</script>
+
+</body>
+</html>
