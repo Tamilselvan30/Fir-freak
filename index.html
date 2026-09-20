@@ -9,8 +9,11 @@
             --bg-color: #0f172a;
             --card-bg: #1e293b;
             --accent-color: #10b981;
+            --accent-hover: #059669;
             --text-color: #f8fafc;
             --subtext: #94a3b8;
+            --warning-bg: rgba(245, 158, 11, 0.1);
+            --warning-border: #f59e0b;
         }
 
         body {
@@ -25,7 +28,7 @@
 
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 650px;
         }
 
         header {
@@ -36,7 +39,8 @@
         header h1 {
             color: var(--accent-color);
             margin: 0;
-            font-size: 2rem;
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
         }
 
         .dashboard {
@@ -44,29 +48,54 @@
             padding: 20px;
             border-radius: 12px;
             margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
         }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .dashboard-header h3 { margin: 0; }
+
+        .clear-btn {
+            background: transparent;
+            border: 1px solid #ef4444;
+            color: #ef4444;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .clear-btn:hover { background: rgba(239, 68, 68, 0.1); }
 
         .macro-summary {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 12px;
             text-align: center;
         }
 
         .macro-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 14px;
             border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .macro-card h4 {
             margin: 0 0 5px 0;
             color: var(--subtext);
+            font-size: 0.85rem;
+            text-transform: uppercase;
         }
 
         .macro-card p {
             margin: 0;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
         }
 
@@ -78,13 +107,14 @@
 
         .tab-btn {
             flex: 1;
-            padding: 10px;
+            padding: 12px 8px;
             border: none;
             background: var(--card-bg);
             color: var(--subtext);
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
+            transition: all 0.2s;
         }
 
         .tab-btn.active {
@@ -94,50 +124,91 @@
 
         .form-section {
             background: var(--card-bg);
-            padding: 20px;
+            padding: 22px;
             border-radius: 12px;
             margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             color: var(--subtext);
+            font-size: 0.9rem;
         }
 
         input[type="text"], input[type="number"], input[type="file"] {
             width: 100%;
-            padding: 10px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             border: 1px solid #334155;
             background: #0f172a;
             color: #fff;
             box-sizing: border-box;
+            font-size: 0.95rem;
         }
 
-        button.submit-btn {
+        button.primary-btn {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: var(--accent-color);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
+            transition: background 0.2s;
         }
+
+        button.primary-btn:hover { background: var(--accent-hover); }
 
         .preview-img {
             max-width: 100%;
-            height: 150px;
+            height: 180px;
             object-fit: cover;
             border-radius: 8px;
             display: none;
             margin-top: 10px;
+        }
+
+        /* Review Section Styling */
+        .review-panel {
+            display: none;
+            background: #1e293b;
+            border: 2px solid var(--warning-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .review-header {
+            color: #f59e0b;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        .macro-grid-inputs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .macro-grid-inputs div label {
+            font-size: 0.8rem;
+            margin-bottom: 4px;
+        }
+
+        .macro-grid-inputs input {
+            text-align: center;
+            font-weight: bold;
         }
 
         .log-section {
@@ -149,31 +220,40 @@
         .log-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             border-bottom: 1px solid #334155;
-            padding: 10px 0;
+            padding: 12px 0;
         }
 
+        .log-item:last-child { border-bottom: none; }
+
         .log-item img {
-            width: 50px;
-            height: 50px;
-            border-radius: 6px;
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
             object-fit: cover;
         }
 
-        .log-info {
-            flex: 1;
-        }
+        .log-info { flex: 1; }
 
         .log-info h5 {
-            margin: 0;
+            margin: 0 0 4px 0;
             font-size: 1rem;
         }
 
         .log-info p {
-            margin: 2px 0 0 0;
+            margin: 0;
             font-size: 0.85rem;
             color: var(--subtext);
+        }
+
+        .delete-item {
+            color: #ef4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
         }
     </style>
 </head>
@@ -187,7 +267,10 @@
 
     <!-- Daily Overview -->
     <div class="dashboard">
-        <h3>Today's Totals</h3>
+        <div class="dashboard-header">
+            <h3>Today's Totals</h3>
+            <button class="clear-btn" onclick="clearAllLogs()">Reset Day</button>
+        </div>
         <div class="macro-summary">
             <div class="macro-card">
                 <h4>Calories</h4>
@@ -204,7 +287,7 @@
         </div>
     </div>
 
-    <!-- Meal Type Selection -->
+    <!-- Meal Selection Tabs -->
     <div class="meal-tabs">
         <button class="tab-btn active" onclick="selectMeal('Breakfast', this)">Breakfast</button>
         <button class="tab-btn" onclick="selectMeal('Lunch', this)">Lunch</button>
@@ -212,25 +295,60 @@
         <button class="tab-btn" onclick="selectMeal('Dinner', this)">Dinner</button>
     </div>
 
-    <!-- Log Meal Form -->
-    <div class="form-section">
-        <h3 id="current-meal-title">Log Breakfast</h3>
+    <!-- Step 1: Input Form -->
+    <div class="form-section" id="input-section">
+        <h3 id="current-meal-title">1. Upload & Describe Meal (Breakfast)</h3>
         <form id="meal-form">
-            <div class="form-group">
-                <label>Food Item Name</label>
-                <input type="text" id="food-name" placeholder="e.g., Grilled Chicken Breast" required>
-            </div>
             <div class="form-group">
                 <label>Food Image</label>
                 <input type="file" id="food-img-input" accept="image/*" onchange="previewFile()">
                 <img id="img-preview" class="preview-img" alt="Food Preview">
             </div>
             <div class="form-group">
-                <label>Weight (grams)</label>
-                <input type="number" id="food-weight" placeholder="e.g., 200" required>
+                <label>Food Item Name</label>
+                <input type="text" id="food-name" placeholder="e.g., Grilled Chicken & Rice" required>
             </div>
-            <button type="submit" class="submit-btn">Analyze & Log Meal</button>
+            <div class="form-group">
+                <label>Weight (grams)</label>
+                <input type="number" id="food-weight" placeholder="e.g., 250" required>
+            </div>
+            <button type="submit" class="primary-btn">Calculate & Suggest Nutrition</button>
         </form>
+    </div>
+
+    <!-- Step 2: Manual Review & Edit Panel -->
+    <div class="review-panel" id="review-panel">
+        <h4 class="review-header">
+            🔍 Step 2: Review Suggested Nutrition
+        </h4>
+        <p style="color: var(--subtext); font-size: 0.85rem; margin-top: -5px;">
+            Adjust any numbers below if needed to ensure complete accuracy before saving.
+        </p>
+
+        <div class="form-group">
+            <label>Food Name & Portion</label>
+            <input type="text" id="review-name-portion" readonly style="opacity: 0.8; background: #1e293b;">
+        </div>
+
+        <div class="macro-grid-inputs">
+            <div>
+                <label>Calories (kcal)</label>
+                <input type="number" id="review-calories" step="1">
+            </div>
+            <div>
+                <label>Protein (g)</label>
+                <input type="number" id="review-protein" step="0.1">
+            </div>
+            <div>
+                <label>Carbs (g)</label>
+                <input type="number" id="review-carbs" step="0.1">
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button class="primary-btn" onclick="confirmAndSaveMeal()">Approve & Save Meal</button>
+            <button class="clear-btn" style="padding: 10px 15px;" onclick="cancelReview()">Cancel</button>
+        </div>
     </div>
 
     <!-- Daily Log Feed -->
@@ -244,13 +362,21 @@
 
 <script>
     let activeMeal = 'Breakfast';
-    const logs = [];
+    let tempEntry = null; // Stores item during review step
+    let currentImageBase64 = '';
+
+    // Load saved logs from localStorage on startup
+    let logs = JSON.parse(localStorage.getItem('fitfresk_logs')) || [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateUI();
+    });
 
     function selectMeal(meal, btn) {
         activeMeal = meal;
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        document.getElementById('current-meal-title').innerText = `Log ${meal}`;
+        document.getElementById('current-meal-title').innerText = `1. Upload & Describe Meal (${meal})`;
     }
 
     function previewFile() {
@@ -261,6 +387,7 @@
         reader.onloadend = function () {
             preview.src = reader.result;
             preview.style.display = 'block';
+            currentImageBase64 = reader.result;
         }
 
         if (file) {
@@ -268,45 +395,107 @@
         } else {
             preview.src = "";
             preview.style.display = 'none';
+            currentImageBase64 = '';
         }
     }
 
+    // Step 1: Generate AI Suggestions based on weight & name
     document.getElementById('meal-form').addEventListener('submit', function(e) {
         e.preventDefault();
 
         const name = document.getElementById('food-name').value;
         const weight = parseFloat(document.getElementById('food-weight').value);
-        const imgInput = document.getElementById('food-img-input');
-        const imgSrc = imgInput.files[0] ? URL.createObjectURL(imgInput.files[0]) : 'https://via.placeholder.com/50';
+        const fallbackImg = 'https://via.placeholder.com/60?text=Food';
 
-        // Simulated nutrition search scaling per gram
-        // Standard baseline estimates per 100g: ~1.5 kcal/g, 0.15g protein/g, 0.2g carbs/g
-        const calories = Math.round(weight * 1.6);
-        const protein = Math.round(weight * 0.18 * 10) / 10;
-        const carbs = Math.round(weight * 0.2 * 10) / 10;
+        // Nutrition lookup logic based on food name heuristics & weight scaling
+        let suggestedCal = Math.round(weight * 1.5);
+        let suggestedProt = Math.round((weight * 0.12) * 10) / 10;
+        let suggestedCarbs = Math.round((weight * 0.22) * 10) / 10;
 
-        const entry = {
+        const lowerName = name.toLowerCase();
+        if (lowerName.includes('chicken') || lowerName.includes('egg') || lowerName.includes('fish') || lowerName.includes('meat') || lowerName.includes('paneer')) {
+            suggestedProt = Math.round((weight * 0.22) * 10) / 10;
+            suggestedCarbs = Math.round((weight * 0.05) * 10) / 10;
+        } else if (lowerName.includes('rice') || lowerName.includes('bread') || lowerName.includes('oats') || lowerName.includes('roti') || lowerName.includes('dosa')) {
+            suggestedProt = Math.round((weight * 0.05) * 10) / 10;
+            suggestedCarbs = Math.round((weight * 0.28) * 10) / 10;
+        }
+
+        // Store into temporary entry
+        tempEntry = {
             id: Date.now(),
             meal: activeMeal,
             name: name,
             weight: weight,
-            calories: calories,
-            protein: protein,
-            carbs: carbs,
-            imgSrc: imgSrc
+            calories: suggestedCal,
+            protein: suggestedProt,
+            carbs: suggestedCarbs,
+            imgSrc: currentImageBase64 || fallbackImg
         };
 
-        logs.push(entry);
-        updateUI();
-        this.reset();
-        document.getElementById('img-preview').style.display = 'none';
+        // Populate Review Panel
+        document.getElementById('review-name-portion').value = `${name} (${weight}g - ${activeMeal})`;
+        document.getElementById('review-calories').value = suggestedCal;
+        document.getElementById('review-protein').value = suggestedProt;
+        document.getElementById('review-carbs').value = suggestedCarbs;
+
+        // Display Review Panel
+        document.getElementById('review-panel').style.display = 'block';
+        document.getElementById('review-panel').scrollIntoView({ behavior: 'smooth' });
     });
+
+    // Step 2: Save Approved Entry
+    function confirmAndSaveMeal() {
+        if (!tempEntry) return;
+
+        // Pull values from user's manual review inputs
+        tempEntry.calories = parseFloat(document.getElementById('review-calories').value) || 0;
+        tempEntry.protein = parseFloat(document.getElementById('review-protein').value) || 0;
+        tempEntry.carbs = parseFloat(document.getElementById('review-carbs').value) || 0;
+
+        logs.push(tempEntry);
+        saveLogs();
+        updateUI();
+
+        // Reset form & review state
+        document.getElementById('meal-form').reset();
+        document.getElementById('img-preview').style.display = 'none';
+        document.getElementById('review-panel').style.display = 'none';
+        tempEntry = null;
+        currentImageBase64 = '';
+    }
+
+    function cancelReview() {
+        document.getElementById('review-panel').style.display = 'none';
+        tempEntry = null;
+    }
+
+    function deleteLog(id) {
+        logs = logs.filter(item => item.id !== id);
+        saveLogs();
+        updateUI();
+    }
+
+    function clearAllLogs() {
+        if (confirm("Are you sure you want to reset all logged meals for today?")) {
+            logs = [];
+            saveLogs();
+            updateUI();
+        }
+    }
+
+    function saveLogs() {
+        localStorage.setItem('fitfresk_logs', JSON.stringify(logs));
+    }
 
     function updateUI() {
         const container = document.getElementById('logs-container');
         
         if (logs.length === 0) {
             container.innerHTML = '<p style="color: var(--subtext); text-align: center;">No meals logged yet today.</p>';
+            document.getElementById('total-calories').innerText = `0 kcal`;
+            document.getElementById('total-protein').innerText = `0 g`;
+            document.getElementById('total-carbs').innerText = `0 g`;
             return;
         }
 
@@ -325,11 +514,12 @@
                         <h5>${item.name} (${item.meal})</h5>
                         <p>${item.weight}g • ${item.calories} kcal • P: ${item.protein}g • C: ${item.carbs}g</p>
                     </div>
+                    <button class="delete-item" onclick="deleteLog(${item.id})" title="Delete">✕</button>
                 </div>
             `;
         });
 
-        document.getElementById('total-calories').innerText = `${totalCal} kcal`;
+        document.getElementById('total-calories').innerText = `${Math.round(totalCal)} kcal`;
         document.getElementById('total-protein').innerText = `${totalProt.toFixed(1)} g`;
         document.getElementById('total-carbs').innerText = `${totalCarb.toFixed(1)} g`;
     }
